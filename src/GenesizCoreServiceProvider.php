@@ -2,9 +2,9 @@
 
 namespace Genesizadmin\GenesizCore;
 
+use Genesizadmin\GenesizCore\Commands\GenesizCoreCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Genesizadmin\GenesizCore\Commands\GenesizCoreCommand;
 
 class GenesizCoreServiceProvider extends PackageServiceProvider
 {

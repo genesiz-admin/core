@@ -2,9 +2,9 @@
 
 namespace Genesizadmin\GenesizCore\Tests;
 
+use Genesizadmin\GenesizCore\GenesizCoreServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Genesizadmin\GenesizCore\GenesizCoreServiceProvider;
 
 class TestCase extends Orchestra
 {
