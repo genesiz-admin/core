@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Genesizadmin\GenesizCore\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class GenesizCoreCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'genesiz-core';
 
     public $description = 'My command';
 
