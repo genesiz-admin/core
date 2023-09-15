@@ -32,6 +32,7 @@
     "autoload": {
         "psr-4": {
             "Genesizadmin\\GenesizCore\\": "src/",
+            "Genesizadmin\\GenesizCore\\Domain": "src/Domain",
             "Genesizadmin\\GenesizCore\\Database\\Factories\\": "database/factories/"
         }
     },
