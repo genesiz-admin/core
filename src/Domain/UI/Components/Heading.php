@@ -10,7 +10,7 @@ class Heading
 
     public static function make($title, $subtitle = ''): void
     {
-        self::mergeShareData('heading', [
+        self::mergeShareData('_heading', [
             'title' => $title,
             'subtitle' => $subtitle,
         ]);

@@ -1,5 +1,5 @@
 {
-    "name": "genesiz-admin/genesiz-core",
+    "name": "genesiz-admin/core",
     "description": "This is my package genesiz-core",
     "keywords": [
         "genesiz-admin",
@@ -18,7 +18,8 @@
     "require": {
         "php": "^8.1",
         "spatie/laravel-package-tools": "^1.14.0",
-        "illuminate/contracts": "^10.0"
+        "illuminate/contracts": "^9.0|^10.0",
+        "inertiajs/inertia-laravel": "^0.6.3"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -32,7 +33,7 @@
     "autoload": {
         "psr-4": {
             "Genesizadmin\\GenesizCore\\": "src/",
-            "Genesizadmin\\GenesizCore\\Domain": "src/Domain",
+            "Genesizadmin\\GenesizCore\\Domain\\": "src/Domain/",
             "Genesizadmin\\GenesizCore\\Database\\Factories\\": "database/factories/"
         }
     },
