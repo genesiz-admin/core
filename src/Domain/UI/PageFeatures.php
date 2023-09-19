@@ -2,7 +2,9 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI;
 
+use Genesizadmin\GenesizCore\Domain\Enums\StyleType;
 use Genesizadmin\GenesizCore\Domain\UI\Components\ActionButton;
+use Genesizadmin\GenesizCore\Domain\UI\Components\Alert;
 use Genesizadmin\GenesizCore\Domain\UI\Components\Heading;
 use Genesizadmin\GenesizCore\Domain\UI\Components\NavigateBack;
 use Genesizadmin\GenesizCore\Domain\UI\Components\TabView;
@@ -112,6 +114,14 @@ trait PageFeatures
     public function toastError($description = '')
     {
         Toast::addToast('Error',$description, 'error');
+    }
+
+    public function pageAlert($message,$description=null)
+    {
+
+        Alert::make($message,$description)
+            ->closeable()
+            ->show();
     }
 
 
