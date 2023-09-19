@@ -8,18 +8,20 @@ class ActionButton
 {
     use WithInertia;
 
-    public static function make($label, $action, $style, $icon = null): void
+    public static function make($label, $url, $type = 'default' ): void
     {
-        self::mergeShareData('heading', [
-            'actions' => [
+        self::mergeShareData('_actions', [
+
                 [
-                    'type' => 'a',
+                    'component' => 'g-button',
                     'label' => $label,
-                    'action' => $action,
-                    'icon' => $icon,
-                    'class' => $style,
+                    'attrs' => [
+                        'is' => 'g-button',
+                        'type' => $type,
+                        'url' => $url
+                    ]
                 ],
             ],
-        ]);
+        );
     }
 }

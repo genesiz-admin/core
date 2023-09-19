@@ -6,6 +6,7 @@ use Genesizadmin\GenesizCore\Domain\UI\Components\ActionButton;
 use Genesizadmin\GenesizCore\Domain\UI\Components\Heading;
 use Genesizadmin\GenesizCore\Domain\UI\Components\NavigateBack;
 use Genesizadmin\GenesizCore\Domain\UI\Components\TabView;
+use Genesizadmin\GenesizCore\Domain\UI\Components\Toast;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -23,14 +24,14 @@ trait PageFeatures
         NavigateBack::url($url);
     }
 
-    public function pagePrimaryAction($label, $action, $icon = null): void
+    public function pagePrimaryAction($label, $action): void
     {
-        ActionButton::make($label, $action, 'btn btn-primary', $icon);
+        ActionButton::make($label, $action, 'primary');
     }
 
-    public function pageSecondaryAction($label, $action, $icon = null): void
+    public function pageSecondaryAction($label, $action): void
     {
-        ActionButton::make($label, $action, 'btn btn-secondary', $icon);
+        ActionButton::make($label, $action);
     }
 
     public function pageCards(array $cards)
@@ -91,6 +92,26 @@ trait PageFeatures
                 return (new $tab['builder']($data))->render();
             }
         }
+    }
+
+    public function toastSuccess($description = '')
+    {
+        Toast::addToast('Success',$description, 'success');
+    }
+
+    public function toastWarning($description = '')
+    {
+        Toast::addToast('Warning',$description, 'warning');
+    }
+
+    public function toastInfo($description = '')
+    {
+        Toast::addToast('Info',$description, 'info');
+    }
+
+    public function toastError($description = '')
+    {
+        Toast::addToast('Error',$description, 'error');
     }
 
 
