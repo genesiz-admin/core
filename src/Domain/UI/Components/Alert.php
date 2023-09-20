@@ -3,31 +3,23 @@
 namespace Genesizadmin\GenesizCore\Domain\UI\Components;
 
 use Genesizadmin\GenesizCore\Domain\Enums\StyleType;
+use Genesizadmin\GenesizCore\Domain\UI\HasStyleType;
 use Genesizadmin\GenesizCore\Domain\UI\WithInertia;
 
 class Alert {
 
-    use WithInertia;
+    use WithInertia, HasStyleType;
 
-
-    private StyleType $type;
     private bool $closable = false, $banner = false;
 
-    public static function make(string $message, string $description = '')
+    public static function make(string $message, ?string $description = null)
     {
             return new static($message,$description);
     }
 
-    public function __construct(private string $message,private string $description = '')
+    public function __construct(private string $message,private ?string $description = '')
     {
         $this->setType(StyleType::Info);
-    }
-
-    public function setType(StyleType $type)
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function closeable($value = true)

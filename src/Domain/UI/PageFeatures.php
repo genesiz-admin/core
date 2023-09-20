@@ -98,22 +98,30 @@ trait PageFeatures
 
     public function toastSuccess($description = '')
     {
-        Toast::addToast('Success',$description, 'success');
+        Toast::make('Success',$description)
+        ->setType(StyleType::Success)
+        ->show();
     }
 
     public function toastWarning($description = '')
     {
-        Toast::addToast('Warning',$description, 'warning');
+        Toast::make('Warning',$description, 'warning')
+        ->setType(StyleType::Warning)
+        ->show();
     }
 
     public function toastInfo($description = '')
     {
-        Toast::addToast('Info',$description, 'info');
+        Toast::make('Info',$description, 'info')
+        ->setType(StyleType::Info)
+        ->show();
     }
 
     public function toastError($description = '')
     {
-        Toast::addToast('Error',$description, 'error');
+        Toast::make('Error',$description, 'error')
+        ->setType(StyleType::Error)
+        ->show();
     }
 
     public function pageAlert($message,$description=null)
