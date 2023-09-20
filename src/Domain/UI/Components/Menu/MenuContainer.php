@@ -1,5 +1,5 @@
 <?php
-namespace Genesizadmin\GenesizCore\Domain\UI\Menu;
+namespace Genesizadmin\GenesizCore\Domain\UI\Components\Menu;
 
 
 
