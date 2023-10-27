@@ -16,6 +16,7 @@ class MenuItem
     public function toArray()
     {
         return [
+            'key' => microtime(),
             'label' => $this->label,
             'url' => $this->url,
             'children' => empty($this->children) ? null : $this->buildMenuitems($this->children)

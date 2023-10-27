@@ -13,4 +13,11 @@ class TextareaInput extends FormInput {
         return $this;
     }
 
+    public function rows($amount)
+    {
+        $this->setAttr('rows',$amount);
+
+        return $this;
+    }
+
 }

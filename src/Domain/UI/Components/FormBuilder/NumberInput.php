@@ -4,9 +4,10 @@ namespace Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder;
 
 use Genesizadmin\GenesizCore\Domain\UI\AdjustWidth;
 
-class TextInput extends FormInput {
+class NumberInput extends FormInput {
 
-    protected $component ='a-input';
+
+    protected $component ='a-input-number';
 
     public function prefix($value)
     {
@@ -26,13 +27,22 @@ class TextInput extends FormInput {
         return $this;
     }
 
-    public function max($value, $showLabel = true)
+    public function max(int $value)
     {
-        $this->setAttr('maxlength',$value);
-        $this->setAttr('show-count',$showLabel);
+        $this->setAttr('max',$value);
         return $this;
     }
 
+    public function min(int $value)
+    {
+        $this->setAttr('min',$value);
+        return $this;
+    }
 
+    public function step(int|float $value)
+    {
+        $this->setAttr('step',$value);
+        return $this;
+    }
 
 }
