@@ -26,6 +26,7 @@ abstract class  FormInput {
     public function __construct(private string $name, private ?string $key = null)
     {
         $this->setParentAttr('label',str($name)->title);
+        $this->setAttr('placeholder', "Enter ".str($name)->lower);
 
         $this->key = $key ?? str($name)->snake;
     }

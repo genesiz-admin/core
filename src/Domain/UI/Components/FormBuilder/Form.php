@@ -14,6 +14,7 @@ class Form {
         $this->attributes['layout'] = 'vertical';
         $this->configs['submitLabel'] = 'Submit';
         $this->configs['resetLabel'] = 'Reset';
+        $this->configs['showReset'] = true;
         $this->defaultValues = [];
     }
 
@@ -56,6 +57,7 @@ class Form {
 
     public function update($url, $method = 'patch')
     {
+        $this->configs['showReset'] = false;
         $this->submitLabel('Update');
         $this->isUpdateForm = true;
         $this->submitTo($url,$method);
@@ -96,7 +98,10 @@ class Form {
         // remove null values
         $fieldsData = array_filter($fieldsData);
 
-        $models = array_column($fieldsData,'name');
+
+        $inputs = array_map(fn($el) => $el->toArray(),$this->fields);
+
+        $models = array_column($inputs,'name');
         $models = array_fill_keys($models, null);
 
         // fill default values
