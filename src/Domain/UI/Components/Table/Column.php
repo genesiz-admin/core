@@ -2,7 +2,13 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
+use Closure;
+
 class Column {
+
+    private Closure $rowFormatter;
+    private array $actions = [];
+
     public static function make(string $name, ?string $key = null)
     {
         return new static($name,$key);
@@ -11,6 +17,35 @@ class Column {
     public function __construct(private string $name, private ?string $key = null)
     {
         $this->key = $key ?? str($name)->snake;
+        $this->format(fn($col) => $col);
+    }
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function format(Closure $callback)
+    {
+        $this->rowFormatter = $callback;
+        return $this;
+    }
+
+    public function getFormatter()
+    {
+        return $this->rowFormatter;
+    }
+
+    public function actions(array $list)
+    {
+        $this->actions = $list;
+
+        return $this;
+    }
+
+    public function getActions()
+    {
+        return $this->actions;
     }
 
     public function toArray()

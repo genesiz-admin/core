@@ -29,10 +29,22 @@ class Table {
         return $this->query instanceof Paginator;
     }
 
+    public function transformRow($row)
+    {
+        foreach($this->columns as $col){
+            if($col->getFormatter()){
+                $row[$col->getKey()] = call_user_func($col->getFormatter(), $row[$col->getKey()]);
+            }
+        }
+        return $row;
+    }
+
     public function render()
     {
+        $rows = $this->isPaginated() ? $this->query->items() : $this->query;
+
         $output =  [
-            'data' => $this->isPaginated() ? $this->query->items() : $this->query,
+            'data' => array_map(fn($row) => $this->transformRow($row),$rows),
             'columns' => array_map(fn($col) => $col->toArray(),$this->columns),
             'pagination' => false
         ];
