@@ -8,6 +8,9 @@ class Column {
 
     private Closure $rowFormatter;
     private array $actions = [];
+    private bool $sortable = false;
+    private string $width = 'auto';
+    private string $fixed = '';
 
     public static function make(string $name, ?string $key = null)
     {
@@ -48,13 +51,36 @@ class Column {
         return $this->actions;
     }
 
+    public function sortable()
+    {
+        $this->sortable = true;
+        return $this;
+    }
+    public function width(string $value)
+    {
+            $this->width = $value;
+            return $this;
+    }
+
+    public function fixeAt(string $value)
+    {
+            $this->fixed = $value;
+            return $this;
+    }
+
     public function toArray()
     {
         return [
             'title' => $this->name,
             'dataIndex' => $this->key,
             'key' => $this->key,
-            'sorter' => false
+            'sorter' => $this->sortable,
+            'width' => $this->width,
+            'fixed' => $this->fixed,
+            'filters' => [
+                ['text' => 'One', 'value' => '1'],
+                ['text' => 'Two', 'value' => '2'],
+            ]
         ];
     }
 }

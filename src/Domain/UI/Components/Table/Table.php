@@ -43,10 +43,6 @@ class Table {
         // set row actions
         $row['actions'] = call_user_func($this->actionCallback, $row);
 
-        $row['urls'] = [
-            'rowClick' => route('users.show',1)
-        ];
-
         return $row;
     }
 
