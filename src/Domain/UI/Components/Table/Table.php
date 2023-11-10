@@ -2,11 +2,13 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
+use Closure;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class Table {
 
     private $columns;
+    private $actionCallback;
 
     public static function make($query)
     {
@@ -36,7 +38,22 @@ class Table {
                 $row[$col->getKey()] = call_user_func($col->getFormatter(), $row[$col->getKey()]);
             }
         }
+
+
+        // set row actions
+        $row['actions'] = call_user_func($this->actionCallback, $row);
+
+        $row['urls'] = [
+            'rowClick' => route('users.show',1)
+        ];
+
         return $row;
+    }
+
+    public function actions(Closure $callback)
+    {
+        $this->actionCallback = $callback;
+        return $this;
     }
 
     public function render()

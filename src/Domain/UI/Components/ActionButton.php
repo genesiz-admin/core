@@ -18,7 +18,7 @@ class ActionButton
                     'attrs' => [
                         'is' => 'g-button',
                         'type' => $type,
-                        'url' => $url
+                        'href' => $url
                     ]
                 ],
             ],
