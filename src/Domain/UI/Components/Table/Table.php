@@ -3,12 +3,17 @@
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
 use Closure;
+use Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder\Form;
+use Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder\NumberInput;
+use Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder\SelectInput;
+use Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder\TextInput;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class Table {
 
     private $columns;
     private $actionCallback;
+    private array $filterViewInputs = [];
 
     public static function make($query)
     {
@@ -52,14 +57,27 @@ class Table {
         return $this;
     }
 
+    public function filterPanel(array $inputs)
+    {
+        $this->filterViewInputs = $inputs;
+        return $this;
+    }
+
     public function render()
     {
+
         $rows = $this->isPaginated() ? $this->query->items() : $this->query;
 
         $output =  [
             'data' => array_map(fn($row) => $this->transformRow($row),$rows),
             'columns' => array_map(fn($col) => $col->toArray(),$this->columns),
-            'pagination' => false
+            'pagination' => false,
+            'filters' => Form::make('filters', $this->filterViewInputs)
+                ->submitLabel('Apply')
+                ->submitTo('','get')
+                ->setDefaults(request()->input('filters',[]))
+                ->hideResetButton()
+                ->toArray()
         ];
 
         if($this->isPaginated()){

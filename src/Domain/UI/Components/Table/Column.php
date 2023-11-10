@@ -76,11 +76,7 @@ class Column {
             'key' => $this->key,
             'sorter' => $this->sortable,
             'width' => $this->width,
-            'fixed' => $this->fixed,
-            'filters' => [
-                ['text' => 'One', 'value' => '1'],
-                ['text' => 'Two', 'value' => '2'],
-            ]
+            'fixed' => $this->fixed
         ];
     }
 }

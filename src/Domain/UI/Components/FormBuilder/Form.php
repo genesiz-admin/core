@@ -49,6 +49,12 @@ class Form {
         return $this;
     }
 
+    public function hideResetButton()
+    {
+        $this->configs['showReset'] = false;
+        return $this;
+    }
+
     public function create($url, $method = 'post')
     {
         $this->submitTo($url,$method);
@@ -57,7 +63,7 @@ class Form {
 
     public function update($url, $method = 'patch')
     {
-        $this->configs['showReset'] = false;
+        $this->hideResetButton();
         $this->submitLabel('Update');
         $this->isUpdateForm = true;
         $this->submitTo($url,$method);
