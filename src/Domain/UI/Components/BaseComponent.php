@@ -36,7 +36,6 @@ abstract class BaseComponent {
     }
 
 
-
     public function toArray()
     {
         return [

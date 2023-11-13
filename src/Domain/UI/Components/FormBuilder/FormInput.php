@@ -81,6 +81,14 @@ abstract class  FormInput {
         return $this;
     }
 
+    public function wrapKeyName($name)
+    {
+        $this->key = "{$name}[{$this->key}]";
+
+        return $this;
+    }
+
+
     public function toArray()
     {
         return [

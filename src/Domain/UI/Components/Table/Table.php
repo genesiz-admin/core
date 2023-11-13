@@ -59,7 +59,7 @@ class Table {
 
     public function filterPanel(array $inputs)
     {
-        $this->filterViewInputs = $inputs;
+        $this->filterViewInputs = array_map(fn($inp) => $inp->wrapKeyName('filter'),$inputs);
         return $this;
     }
 
@@ -74,8 +74,8 @@ class Table {
             'pagination' => false,
             'filters' => Form::make('filters', $this->filterViewInputs)
                 ->submitLabel('Apply')
-                ->submitTo('','get')
-                ->setDefaults(request()->input('filters',[]))
+                ->submitTo(request()->url(),'get')
+                ->setDefaults(request()->collect('filter',[])->mapWithKeys(fn($e,$k) => ["filter[$k]" => $e])->toArray())
                 ->hideResetButton()
                 ->toArray()
         ];
