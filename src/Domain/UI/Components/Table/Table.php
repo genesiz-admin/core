@@ -46,7 +46,9 @@ class Table {
 
 
         // set row actions
-        $row['actions'] = call_user_func($this->actionCallback, $row);
+        if($this->actionCallback){
+            $row['actions'] = call_user_func($this->actionCallback, $row);
+        }
 
         return $row;
     }
