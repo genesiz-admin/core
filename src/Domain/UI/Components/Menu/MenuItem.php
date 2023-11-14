@@ -3,6 +3,8 @@ namespace Genesizadmin\GenesizCore\Domain\UI\Components\Menu;
 
 class MenuItem
 {
+    private string $icon = '';
+
     public static function make($label, $url, array $children = [])
     {
         return new static($label,$url,$children);
@@ -13,12 +15,19 @@ class MenuItem
 
     }
 
+    public function icon(string $name)
+    {
+        $this->icon = $name;
+        return $this;
+    }
+
     public function toArray()
     {
         return [
             'key' => microtime(),
             'label' => $this->label,
             'url' => $this->url,
+            'iconName' => $this->icon.' text-lg',
             'children' => empty($this->children) ? null : $this->buildMenuitems($this->children)
         ];
     }
