@@ -11,6 +11,7 @@ class Column {
     private bool $sortable = false;
     private string $width = 'auto';
     private string $fixed = '';
+    private string $type = 'default';
 
     public static function make(string $name, ?string $key = null)
     {
@@ -68,6 +69,12 @@ class Column {
             return $this;
     }
 
+    public function type($value)
+    {
+        $this->type = $value;
+        return $this;
+    }
+
     public function toArray()
     {
         return [
@@ -76,7 +83,8 @@ class Column {
             'key' => $this->key,
             'sorter' => $this->sortable,
             'width' => $this->width,
-            'fixed' => $this->fixed
+            'fixed' => $this->fixed,
+            'type' => $this->type
         ];
     }
 }

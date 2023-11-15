@@ -38,19 +38,21 @@ class Table {
 
     public function transformRow($row)
     {
+        $tempRow = [];
+
         foreach($this->columns as $col){
             if($col->getFormatter()){
-                $row[$col->getKey()] = call_user_func($col->getFormatter(), $row[$col->getKey()]);
+                $tempRow[$col->getKey()] = call_user_func($col->getFormatter(), $row[$col->getKey()]);
             }
         }
 
 
         // set row actions
         if($this->actionCallback){
-            $row['actions'] = call_user_func($this->actionCallback, $row);
+            $tempRow['actions'] = call_user_func($this->actionCallback, $row);
         }
 
-        return $row;
+        return $tempRow;
     }
 
     public function actions(Closure $callback)
