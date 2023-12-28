@@ -5,6 +5,7 @@ namespace Genesizadmin\GenesizCore\Domain\UI;
 use Genesizadmin\GenesizCore\Domain\Enums\StyleType;
 use Genesizadmin\GenesizCore\Domain\UI\Components\ActionButton;
 use Genesizadmin\GenesizCore\Domain\UI\Components\Alert;
+use Genesizadmin\GenesizCore\Domain\UI\Components\Feedback\Message;
 use Genesizadmin\GenesizCore\Domain\UI\Components\Heading;
 use Genesizadmin\GenesizCore\Domain\UI\Components\NavigateBack;
 use Genesizadmin\GenesizCore\Domain\UI\Components\TabView;
@@ -130,6 +131,11 @@ trait PageFeatures
         Alert::make($message,$description)
             ->closeable()
             ->show();
+    }
+
+     public function message($content, $type = StyleType::Info)
+    {
+        Message::make($content,$type)->show();
     }
 
 

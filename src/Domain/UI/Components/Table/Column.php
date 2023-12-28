@@ -3,15 +3,15 @@
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
 use Closure;
+use Genesizadmin\GenesizCore\Domain\UI\HasAlignment;
+use Genesizadmin\GenesizCore\Domain\UI\HasInlineAttributes;
 
 class Column {
 
+    use HasAlignment,HasInlineAttributes;
+
     private Closure $rowFormatter;
-    private array $actions = [];
-    private bool $sortable = false;
-    private string $width = 'auto';
-    private string $fixed = '';
-    private string $type = 'default';
+    private  $actions;
 
     public static function make(string $name, ?string $key = null)
     {
@@ -20,13 +20,18 @@ class Column {
 
     public function __construct(private string $name, private ?string $key = null)
     {
-        $this->key = $key ?? str($name)->snake;
+        $key = $key ?? str($name)->snake()->toString();
+
+        $this->setAttribute('key',$key);
+        $this->setAttribute('dataIndex',$key);
+        $this->setAttribute('title',$name);
+
         $this->format(fn($col) => $col);
     }
 
     public function getKey()
     {
-        return $this->key;
+        return $this->getAttribute('key');
     }
 
     public function format(Closure $callback)
@@ -40,51 +45,79 @@ class Column {
         return $this->rowFormatter;
     }
 
-    public function actions(array $list)
+    public function actions(callable $callback)
     {
-        $this->actions = $list;
+        $this->setAttribute('type','actions');
+
+        $this->actions = $callback;
 
         return $this;
     }
 
-    public function getActions()
+    public function getActionCallback()
     {
         return $this->actions;
     }
 
     public function sortable()
     {
-        $this->sortable = true;
+        $this->setAttribute('sorter',true);
         return $this;
     }
     public function width(string $value)
     {
-            $this->width = $value;
+            $this->setAttribute('width',$value);
             return $this;
     }
 
     public function fixeAt(string $value)
     {
-            $this->fixed = $value;
+            $this->setAttribute('fixed',$value);
             return $this;
     }
 
     public function type($value)
     {
-        $this->type = $value;
+        $this->setAttribute('type',$value);
+        return $this;
+    }
+
+    public function asBadge()
+    {
+
+        $color  = fn($col) => 'green';
+        $text  = fn($col) => $col;
+
+        $this->type('tag');
+        $this->format(fn($col) => [
+                'attrs' => [
+                    'color' => call_user_func($color,'x'),
+                    'text' => call_user_func($text,$col),
+                ],
+
+                'component' => 'a-badge'
+                ]);
+
         return $this;
     }
 
     public function toArray()
     {
         return [
-            'title' => $this->name,
-            'dataIndex' => $this->key,
-            'key' => $this->key,
-            'sorter' => $this->sortable,
-            'width' => $this->width,
-            'fixed' => $this->fixed,
-            'type' => $this->type
+            ...$this->getAttributes(),
+
         ];
+    }
+
+    public function component()
+    {
+        $this->setAttribute('type','component');
+        $this->setAttribute('component','a-tag');
+        $this->setAttribute('attrs', [
+            'color' => 'green'
+        ]);
+
+        return $this;
+
     }
 }

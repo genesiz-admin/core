@@ -3,6 +3,7 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components;
 
+use Genesizadmin\GenesizCore\Domain\UI\HasSizes;
 use Genesizadmin\GenesizCore\Domain\UI\WithInertia;
 
 class Drawer {
@@ -20,6 +21,12 @@ class Drawer {
 
     }
 
+    public function setAttribute($key,$value)
+    {
+        $this->attr[$key] = $value;
+        return $this;
+    }
+
     public function title($text)
     {
         $this->attr['title'] = $text;
@@ -29,6 +36,12 @@ class Drawer {
     public function size($size)
     {
         $this->attr['size'] = $size;
+        return $this;
+    }
+
+    public function width(int|string $width)
+    {
+        $this->attr['width'] = $width;
         return $this;
     }
 

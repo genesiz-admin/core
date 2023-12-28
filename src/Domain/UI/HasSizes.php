@@ -3,9 +3,11 @@
 namespace Genesizadmin\GenesizCore\Domain\UI;
 
 trait HasSizes {
+    use HasInlineAttributes;
+
     public function setSize($size)
     {
-        $this->setAttr('size',$size);
+        $this->setAttribute('size',$size);
         return $this;
     }
 

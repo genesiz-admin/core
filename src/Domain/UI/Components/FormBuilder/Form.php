@@ -64,7 +64,7 @@ class Form {
     public function update($url, $method = 'patch')
     {
         $this->hideResetButton();
-        $this->submitLabel('Update');
+        // $this->submitLabel('Update');
         $this->isUpdateForm = true;
         $this->submitTo($url,$method);
         return $this;
