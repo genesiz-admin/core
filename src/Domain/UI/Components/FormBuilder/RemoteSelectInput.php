@@ -14,4 +14,13 @@ class RemoteSelectInput extends FormInput {
         return $this;
     }
 
+    public function model($model,$column)
+    {
+        $url = url("/genz/search-model?column=$column&model=$model");
+
+      $this->url($url);
+
+      return $this;
+    }
+
 }

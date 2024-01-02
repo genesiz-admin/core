@@ -95,7 +95,8 @@ class Table {
             $output['pagination'] = [
                 'total' => $this->query->total(),
                 'current' => $this->query->currentPage(),
-                'pageSize' => $this->query->perPage()
+                'pageSize' => $this->query->perPage(),
+                'hasPages' => $this->query->hasPages()
             ];
         }
 

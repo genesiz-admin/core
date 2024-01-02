@@ -20,6 +20,7 @@ class GenesizCoreServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_genesiz-core_table')
+            ->hasRoute('api')
             ->hasCommand(GenesizCoreCommand::class);
     }
 }

@@ -45,4 +45,10 @@ class NumberInput extends FormInput {
         return $this;
     }
 
+    public function hideControls()
+    {
+        $this->setAttr('controls',false);
+        return $this;
+    }
+
 }
