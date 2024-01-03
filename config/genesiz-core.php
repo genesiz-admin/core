@@ -9,5 +9,9 @@ return [
     'toast' => [
         'placement' => Placement::BottomRight,
         'duration' => 3
+    ],
+
+    'auth' => [
+        'guard' => 'web'
     ]
 ];

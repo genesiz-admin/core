@@ -1,4 +1,5 @@
 <?php
+
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Menu;
 
 
@@ -8,11 +9,13 @@ class SideMenu
 
     protected array $menus;
 
+    public static $menuCallback;
+
     protected string $visiblePath = '';
 
     public static function make($key, array $menus = [])
     {
-        return new static($key,$menus);
+        return new static($key, $menus);
     }
 
     public function __construct(protected string $key, array $items)
@@ -60,7 +63,7 @@ class SideMenu
         return $this;
     }
 
-    public function item($label,$url, $icon = null)
+    public function item($label, $url, $icon = null)
     {
         $this->menus[] = [
             'label' => $label,
@@ -122,5 +125,27 @@ class SideMenu
     public function dd()
     {
         dd($this->toArray());
+    }
+
+    // rename this to make
+    public static function build(callable $callback)
+    {
+        static::$menuCallback = $callback;
+    }
+
+    // rename this to render
+    public static function execute($request)
+    {
+        $menuitems =  call_user_func(static::$menuCallback, $request);
+
+        $data =  array_map(function (MenuItem  $el) {
+            if ($el->isVisible()) {
+                return $el->toArray();
+            }
+
+            return null;
+        }, $menuitems);
+
+        return array_filter($data);
     }
 }

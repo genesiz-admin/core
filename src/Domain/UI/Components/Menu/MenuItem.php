@@ -1,18 +1,19 @@
 <?php
+
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Menu;
 
 class MenuItem
 {
     private string $icon = '';
+    private bool $visible = true;
 
     public static function make($label, $url, array $children = [])
     {
-        return new static($label,$url,$children);
+        return new static($label, $url, $children);
     }
 
     public function __construct(private string $label, private string $url, private $children)
     {
-
     }
 
     public function icon(string $name)
@@ -27,15 +28,29 @@ class MenuItem
             'key' => microtime(),
             'label' => $this->label,
             'url' => $this->url,
-            'iconName' => $this->icon.' text-lg',
+            'iconName' => $this->icon . ' text-lg',
             'children' => empty($this->children) ? null : $this->buildMenuitems($this->children)
         ];
     }
 
-     private function buildMenuitems(array $items)
+    private function buildMenuitems(array $items)
     {
         return array_map(function ($el) {
             return $el->toArray();
         }, $items);
+    }
+
+    public function setVisibility(callable|bool $value)
+    {
+        if(is_callable($value)){
+            $value = call_user_func($value);
+        }
+        $this->visible = $value;
+        return $this;
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->visible;
     }
 }

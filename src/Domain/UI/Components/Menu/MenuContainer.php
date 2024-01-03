@@ -1,8 +1,6 @@
 <?php
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Menu;
 
-
-
 class MenuContainer
 {
     public static array $sidebarMenus = [];
@@ -41,5 +39,11 @@ class MenuContainer
     public static function getActiveSidebarMenu()
     {
         return reset(self::$sidebarMenus);
+    }
+
+
+    public static function render($request)
+    {
+        
     }
 }
