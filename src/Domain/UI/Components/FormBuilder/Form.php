@@ -2,7 +2,8 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder;
 
-class Form {
+class Form
+{
 
     private array $attributes;
     private array $configs;
@@ -12,18 +13,19 @@ class Form {
     public function __construct(private string $name, private array $fields)
     {
         $this->attributes['layout'] = 'vertical';
-        $this->configs['submitLabel'] = 'Submit';
+        // $this->configs['submitLabel'] = 'Submit';
         $this->configs['resetLabel'] = 'Reset';
         $this->configs['showReset'] = true;
         $this->defaultValues = [];
+        $this->submitLabel('Submit');
     }
 
-    public static function make($name,$fields)
+    public static function make($name, $fields)
     {
-        return new static($name,$fields);
+        return new static($name, $fields);
     }
 
-    public function submitTo($url,$method = 'post')
+    public function submitTo($url, $method = 'post')
     {
         $this->configs['url'] = $url;
         $this->configs['method'] = $method;
@@ -57,7 +59,7 @@ class Form {
 
     public function create($url, $method = 'post')
     {
-        $this->submitTo($url,$method);
+        $this->submitTo($url, $method);
         return $this;
     }
 
@@ -66,7 +68,7 @@ class Form {
         $this->hideResetButton();
         // $this->submitLabel('Update');
         $this->isUpdateForm = true;
-        $this->submitTo($url,$method);
+        $this->submitTo($url, $method);
         return $this;
     }
 
@@ -79,40 +81,39 @@ class Form {
 
     public function toArray()
     {
-        $fieldsData = array_map(function($f){
+        $fieldsData = array_map(function ($f) {
 
             // hide inputs on update form
-            if($this->isUpdateForm && $f->hideOnUpdate){
+            if ($this->isUpdateForm && $f->hideOnUpdate) {
                 return null;
             }
 
             // hide inputs on create form
-            if(!$this->isUpdateForm && $f->hideOnCreate){
+            if (!$this->isUpdateForm && $f->hideOnCreate) {
                 return null;
             }
 
             // dd($f->getComponentName());
             // wrap all component with ROW by default
-            if($f->getComponentName() != 'a-row'){
+            if ($f->getComponentName() != 'a-row') {
                 return Row::wrap([$f])->toArray();
             }
 
             return $f->toArray();
-
         }, $this->fields);
 
         // remove null values
         $fieldsData = array_filter($fieldsData);
 
 
-        $inputs = array_map(fn($el) => $el->toArray(),$this->fields);
+        $inputs = array_map(fn ($el) => $el->toArray(), $this->fields);
 
-        $models = array_column($inputs,'name');
+        $models = array_column($inputs, 'name');
         $models = array_fill_keys($models, null);
 
         // fill default values
-        if($this->defaultValues){
-            $models = array_merge($models,$this->defaultValues);
+        if ($this->defaultValues) {
+            $models = array_merge($models, $this->defaultValues);
         }
 
         return [
@@ -122,5 +123,4 @@ class Form {
             'components' => $fieldsData
         ];
     }
-
 }

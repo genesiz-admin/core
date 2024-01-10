@@ -8,11 +8,12 @@ class Heading
 {
     use WithInertia;
 
-    public static function make($title, $subtitle = ''): void
+    public static function make($title, $subtitle = '', $icon = null): void
     {
         self::mergeShareData('_heading', [
             'title' => $title,
             'subtitle' => $subtitle,
+            'icon' => $icon,
         ]);
     }
 }

@@ -17,9 +17,9 @@ trait PageFeatures
 {
     use WithInertia;
 
-    public function pageHeading($title, $subtitle = ''): void
+    public function pageHeading($title, $subtitle = '', $icon = null): void
     {
-        Heading::make($title, $subtitle);
+        Heading::make($title, $subtitle,$icon);
     }
 
     public function navigateBack($url = null): void
