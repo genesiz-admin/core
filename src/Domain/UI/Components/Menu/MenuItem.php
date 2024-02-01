@@ -6,6 +6,7 @@ class MenuItem
 {
     private string $icon = '';
     private bool $visible = true;
+    private string $method = 'get';
 
     public static function make($label, $url, array $children = [])
     {
@@ -22,12 +23,19 @@ class MenuItem
         return $this;
     }
 
+    public function asPost()
+    {
+        $this->method = 'post';
+        return $this;
+    }
+
     public function toArray()
     {
         return [
             'key' => microtime(),
             'label' => $this->label,
             'url' => $this->url,
+            'method' => $this->method,
             'iconName' => $this->icon . ' text-lg',
             'children' => empty($this->children) ? null : $this->buildMenuitems($this->children)
         ];

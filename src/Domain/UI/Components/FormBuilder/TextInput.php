@@ -31,4 +31,10 @@ class TextInput extends FormInput
         $this->setAttr('show-count', $showLabel);
         return $this;
     }
+
+    public function type($value)
+    {
+        $this->setAttr('type', $value);
+        return $this;
+    }
 }

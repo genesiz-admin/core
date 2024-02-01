@@ -3,6 +3,7 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components;
 
+use Genesizadmin\GenesizCore\Domain\UI\Components\FormBuilder\Form;
 use Genesizadmin\GenesizCore\Domain\UI\HasSizes;
 use Genesizadmin\GenesizCore\Domain\UI\WithInertia;
 
@@ -57,7 +58,7 @@ class Drawer {
         return $this;
     }
 
-    public function setFormClass($form)
+    public function setFormClass(Form $form)
     {
         $this->attr['blueprint'] = $form->toArray();
         return $this;
