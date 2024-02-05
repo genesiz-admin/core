@@ -6,7 +6,7 @@ use Closure;
 use Genesizadmin\GenesizCore\Domain\UI\HasAlignment;
 use Genesizadmin\GenesizCore\Domain\UI\HasInlineAttributes;
 
-class Column
+abstract class Column
 {
 
     use HasAlignment, HasInlineAttributes;
@@ -14,8 +14,10 @@ class Column
     private Closure $rowFormatter;
     private Closure $colCallback;
     private  $actions;
-    private string $component = "span";
-    private array $componentAttrs = [];
+    protected string $component = "span";
+    protected array $componentAttrs = [];
+    protected Closure $attrsCallback;
+    protected bool $hasInnerText = true;
 
     public static function make(string $name, mixed $key = null)
     {
@@ -38,6 +40,13 @@ class Column
         $this->setAttribute('dataIndex', $key);
         $this->setAttribute('title', $name);
         $this->format(fn ($col) => $col);
+        $this->attrsCallback = fn ($row) => [];
+
+        $this->setup();
+    }
+
+    protected function setup()
+    {
     }
 
     public function getKey()
@@ -109,13 +118,24 @@ class Column
         return $this;
     }
 
+    protected function resolveText($row)
+    {
+        return call_user_func($this->colCallback, $row);
+    }
+
+    protected function resolveColumn($row)
+    {
+        return $row[$this->getKey()];
+    }
+
     public function resolveValue($row)
     {
         return [
             'component' =>  $this->component,
-            'text' => call_user_func($this->colCallback, $row),
-            'attrs' => $this->componentAttrs,
-            'type' => null
+            'text' => $this->resolveText($row),
+            'attrs' => array_merge($this->componentAttrs, call_user_func($this->attrsCallback, $row)),
+            'type' => null,
+            'hasInnerText' => $this->hasInnerText
         ];
     }
 
@@ -140,11 +160,13 @@ class Column
     public function asLink()
     {
         $this->component = 'Link';
-        $this->componentAttrs = function ($row) {
+        $this->hasInnerText = true;
+        $this->attrsCallback = function ($row) {
             return [
-                'href' => '#'
+                'href' => $this->resolveText($row)
             ];
         };
+
 
         return $this;
     }

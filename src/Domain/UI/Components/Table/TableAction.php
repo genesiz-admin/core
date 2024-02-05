@@ -2,13 +2,15 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
-class TableAction {
+class TableAction
+{
 
     private array $data = [];
 
     public function __construct(string $label)
     {
         $this->data['label'] = $label;
+        $this->data['icon'] = null;
         return $this;
     }
 
