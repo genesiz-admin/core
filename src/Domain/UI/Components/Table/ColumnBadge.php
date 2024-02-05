@@ -2,6 +2,8 @@
 
 namespace Genesizadmin\GenesizCore\Domain\UI\Components\Table;
 
+use Exception;
+
 class ColumnBadge extends Column
 {
 
@@ -39,6 +41,10 @@ class ColumnBadge extends Column
 
     public function resolveValue($row)
     {
+        if (empty($this->colors)) {
+            throw new Exception('Color mapping is required');
+        }
+
         return [
             'component' =>  $this->component,
             'text' => null,

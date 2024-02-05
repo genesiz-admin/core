@@ -39,7 +39,6 @@ abstract class Column
         $this->setAttribute('key', $key);
         $this->setAttribute('dataIndex', $key);
         $this->setAttribute('title', $name);
-        $this->format(fn ($col) => $col);
         $this->attrsCallback = fn ($row) => [];
 
         $this->setup();
@@ -53,32 +52,7 @@ abstract class Column
     {
         return $this->getAttribute('key');
     }
-
-    public function format(Closure $callback)
-    {
-        $this->rowFormatter = $callback;
-        return $this;
-    }
-
-    public function getFormatter()
-    {
-        return $this->rowFormatter;
-    }
-
-    public function actions(callable $callback)
-    {
-        $this->setAttribute('type', 'actions');
-
-        $this->actions = $callback;
-
-        return $this;
-    }
-
-    public function getActionCallback()
-    {
-        return $this->actions;
-    }
-
+    
     public function sortable()
     {
         $this->setAttribute('sorter', true);
@@ -99,22 +73,6 @@ abstract class Column
     public function type($value)
     {
         $this->setAttribute('type', $value);
-        return $this;
-    }
-
-    public function asBadge(array $labels, array $colors = null)
-    {
-
-        $this->type('tag');
-        $this->format(fn ($col) => [
-            'attrs' => [
-                'color' => $colors[$col] ?? 'green',
-                'text' => $labels[$col],
-            ],
-
-            'component' => 'a-badge'
-        ]);
-
         return $this;
     }
 
@@ -144,30 +102,5 @@ abstract class Column
         return [
             ...$this->getAttributes(),
         ];
-    }
-
-    public function component()
-    {
-        $this->setAttribute('type', 'component');
-        $this->setAttribute('component', 'a-tag');
-        $this->setAttribute('attrs', [
-            'color' => 'green'
-        ]);
-
-        return $this;
-    }
-
-    public function asLink()
-    {
-        $this->component = 'Link';
-        $this->hasInnerText = true;
-        $this->attrsCallback = function ($row) {
-            return [
-                'href' => $this->resolveText($row)
-            ];
-        };
-
-
-        return $this;
     }
 }

@@ -22,6 +22,18 @@ class ColumnLink extends Column
         return $this;
     }
 
+    public function asNativeLink()
+    {
+        $this->component = 'a';
+        return $this;
+    }
+
+    public function openInNewTab()
+    {
+        $this->setAttribute('target', '_blank');
+        return $this;
+    }
+
     public function resolveValue($row)
     {
         return [
@@ -29,7 +41,7 @@ class ColumnLink extends Column
             'text' => $this->resolveText($row),
             'attrs' => [
                 'href' => call_user_func($this->hrefCallback, $row),
-                'target' => '_blank'
+                ...$this->getAttributes()
             ],
             'type' => null,
             'hasInnerText' => true
