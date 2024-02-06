@@ -11,6 +11,7 @@ class TableAction
     {
         $this->data['label'] = $label;
         $this->data['icon'] = null;
+        $this->data['as'] = 'a';
         return $this;
     }
 
@@ -28,6 +29,12 @@ class TableAction
     public function url(string $url)
     {
         $this->data['url'] = $url;
+        return $this;
+    }
+
+    public function asButton()
+    {
+        $this->data['as'] = 'button';
         return $this;
     }
 
